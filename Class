@@ -1,0 +1,45 @@
+#include <iostream>
+using namespace std;
+
+// Forward declaration of class B
+class B;
+
+// Class A with a friend function and a friend class
+class A {
+private:
+    int dataA;
+public:
+    A(int d) : dataA(d) {}
+
+    // Friend function declaration
+    friend void friendFunction(const A& objA);
+
+    // Friend class declaration
+    friend class B;
+};
+
+// Friend function definition
+void friendFunction(const A& objA) {
+    cout << "Friend function accessing private member 'dataA' of class A: " << objA.dataA << endl;
+}
+
+// Class B with access to private members of A
+class B {
+public:
+    void accessPrivateMember(const A& objA) {
+        cout << "Class B accessing private member 'dataA' of class A: " << objA.dataA << endl;
+    }
+};
+
+int main() {
+    A objA(10);
+
+    // Using friend function to access private member of A
+    friendFunction(objA);
+
+    // Using friend class B to access private member of A
+    B objB;
+    objB.accessPrivateMember(objA);
+
+    return 0;
+}
